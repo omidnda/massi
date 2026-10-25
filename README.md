@@ -39,12 +39,12 @@ The scene check audits 2,002 desktop/mobile camera positions against room bounds
 
 The room is a free architectural study, not MASSI’s real interior. It includes procedural chairs, mirrors, styling counters, reception, sofa, table, plants, wall relief, floor joints and instanced wall fluting. Generated stone/wordmark textures, local lighting, shadows, one planar reflecting mirror and environment-reflective secondary mirrors require no external assets.
 
-GSAP ScrollTrigger drives camera progress. React Three Fiber interpolates position and look-at along separate Catmull–Rom curves with delta-time damping. Native document scrolling remains in use.
+GSAP ScrollTrigger drives camera progress. React Three Fiber interpolates position and look-at along separate Catmull–Rom curves with delta-time damping. Native document scrolling remains in use. Mobile framing shifts the sculpture away from the editorial copy through a smoothly blended camera target adjustment.
 
 - Header, chapter dots and mobile menu navigate all chapters.
 - Pause holds the camera position; resume follows scrolling again.
 - System `prefers-reduced-motion` holds a static camera and removes scroll-reveal animations.
-- HIGH/ECO adjust pixel ratio and mirror resolution. Small viewports default to ECO. HIGH caps pixel ratio at 1.5; ECO uses 1.
+- HIGH/ECO adjust pixel ratio, mirror resolution and shadow-map resolution. Small viewports default to ECO, including after resizing across the mobile breakpoint. HIGH caps pixel ratio at 1.5; ECO uses 1.
 - WebGL2 absence, renderer failure and context loss show an editorial CSS fallback with usable content.
 - The concept/sources dialog explains provenance. Booking is not simulated; contact does not imply a confirmed appointment.
 

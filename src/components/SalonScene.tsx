@@ -348,12 +348,12 @@ function Station({
             <meshStandardMaterial
               color="#ead3a8"
               emissive="#f8c88b"
-              emissiveIntensity={2}
+              emissiveIntensity={1.5}
             />
           </mesh>
           <pointLight
             position={[x, 2.5, 0.38]}
-            intensity={7}
+            intensity={4}
             distance={3}
             color="#ffddaa"
           />
@@ -407,7 +407,7 @@ function Pendant({ position }: { position: Vec }) {
         <circleGeometry args={[0.33, 32]} />
         <meshBasicMaterial color="#ffdda4" toneMapped={false} />
       </mesh>
-      <DownLight position={[0, -0.05, 0]} intensity={22} />
+      <DownLight position={[0, -0.05, 0]} intensity={14} />
     </group>
   );
 }
@@ -466,7 +466,7 @@ function Sculpture() {
           />
         </mesh>
       ))}
-      <DownLight position={[0, 4.8, 0]} intensity={70} angle={0.4} />
+      <DownLight position={[0, 4.8, 0]} intensity={45} angle={0.4} />
     </group>
   );
 }
@@ -517,15 +517,15 @@ function Room({ quality }: { quality: string }) {
     <>
       <color attach="background" args={["#eee6dc"]} />
       <fog attach="fog" args={["#eee6dc", 32, 58]} />
-      <ambientLight intensity={0.8} color="#fff3e4" />
-      <hemisphereLight args={["#fff7eb", "#b29b7d", 1.35]} />
+      <ambientLight intensity={0.55} color="#fff3e4" />
+      <hemisphereLight args={["#fff7eb", "#b29b7d", 0.95]} />
       <directionalLight
         position={[4, 5, 7]}
-        intensity={3}
+        intensity={2}
         color="#fff0d7"
         castShadow
-        shadow-mapSize={[1536, 1536]}
-        shadow-radius={7}
+        shadow-mapSize={quality === "high" ? [1536, 1536] : [1024, 1024]}
+        shadow-radius={quality === "high" ? 7 : 4}
         shadow-camera-left={-12}
         shadow-camera-right={12}
         shadow-camera-top={12}
@@ -534,13 +534,13 @@ function Room({ quality }: { quality: string }) {
       />
       <pointLight
         position={[-1, 4, -5]}
-        intensity={28}
+        intensity={16}
         color="#ffe0b4"
         distance={15}
       />
       <pointLight
         position={[4, 3, 1]}
-        intensity={18}
+        intensity={11}
         color="#fff2df"
         distance={12}
       />
@@ -600,7 +600,7 @@ function Room({ quality }: { quality: string }) {
           <meshStandardMaterial
             color="#f8d7a0"
             emissive="#ffd28c"
-            emissiveIntensity={3}
+            emissiveIntensity={2}
           />
         </mesh>
       ))}
@@ -695,7 +695,7 @@ function Room({ quality }: { quality: string }) {
       <Environment resolution={128} frames={1}>
         <Lightformer
           form="rect"
-          intensity={4}
+          intensity={3}
           color="#fff7e9"
           position={[0, 5, 0]}
           rotation={[Math.PI / 2, 0, 0]}
@@ -703,7 +703,7 @@ function Room({ quality }: { quality: string }) {
         />
         <Lightformer
           form="rect"
-          intensity={3}
+          intensity={2.5}
           color="#ffe5c2"
           position={[-5, 2, 0]}
           rotation={[0, Math.PI / 2, 0]}
@@ -711,7 +711,7 @@ function Room({ quality }: { quality: string }) {
         />
         <Lightformer
           form="rect"
-          intensity={2.5}
+          intensity={2}
           color="#fff1e3"
           position={[6, 3, 3]}
           rotation={[0, -Math.PI / 2, 0]}
@@ -730,7 +730,7 @@ function CameraRig({
   reduced: boolean;
   quality: string;
 }) {
-  const { camera, gl, size, invalidate } = useThree();
+  const { camera, gl, size } = useThree();
   const current = useRef(reduced ? 0.12 : 0);
   const clock = useRef({ time: 0, frames: 0 });
   const { path, look } = useMemo(createCameraPaths, []);
@@ -750,6 +750,12 @@ function CameraRig({
       pos.z += 2;
       pos.y += 0.4;
       target.x += 0.4;
+      const sculptureFraming = THREE.MathUtils.smoothstep(
+        1 - Math.abs(current.current - 0.72) / 0.12,
+        0,
+        1,
+      );
+      target.x -= sculptureFraming * 1.1;
     }
     camera.position.copy(pos);
     camera.lookAt(target);
@@ -779,8 +785,6 @@ function CameraRig({
       }
       clock.current = { time: 0, frames: 0 };
     }
-    if (!reduced && Math.abs(current.current - progress.current) > 0.0001)
-      invalidate();
   });
   return null;
 }
@@ -810,7 +814,7 @@ export default function SalonScene({
       }}
       onCreated={({ gl }) => {
         gl.toneMapping = THREE.ACESFilmicToneMapping;
-        gl.toneMappingExposure = 1.05;
+        gl.toneMappingExposure = 1;
         gl.domElement.addEventListener("webglcontextlost", onFailure, {
           once: true,
         });

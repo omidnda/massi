@@ -40,6 +40,7 @@ function Arrow({ diagonal = false }: { diagonal?: boolean }) {
 export default function Experience() {
   const root = useRef<HTMLElement>(null);
   const progress = useRef(0);
+  const currentChapter = useRef(0);
   const [chapter, setChapter] = useState(0);
   const [supported, setSupported] = useState<boolean | null>(null);
   const [ready, setReady] = useState(false);
@@ -62,7 +63,11 @@ export default function Experience() {
       setSystemReduced(mq.matches || params.get("motion") === "reduced");
     update();
     mq.addEventListener("change", update);
-    setQuality(window.innerWidth < 700 ? "eco" : "high");
+    const mobileQuality = window.matchMedia("(max-width: 699px)");
+    const updateQuality = () =>
+      setQuality(mobileQuality.matches ? "eco" : "high");
+    updateQuality();
+    mobileQuality.addEventListener("change", updateQuality);
     try {
       const c = document.createElement("canvas");
       const context = c.getContext("webgl2");
@@ -71,7 +76,10 @@ export default function Experience() {
     } catch {
       setSupported(false);
     }
-    return () => mq.removeEventListener("change", update);
+    return () => {
+      mq.removeEventListener("change", update);
+      mobileQuality.removeEventListener("change", updateQuality);
+    };
   }, []);
   useEffect(() => {
     gsap.registerPlugin(ScrollTrigger);
@@ -86,7 +94,7 @@ export default function Experience() {
             "--journey",
             String(self.progress),
           );
-          setChapter(
+          const nextChapter =
             chapters.reduce((active, c, i) => {
               const top = document
                 .getElementById(c.id)
@@ -94,8 +102,11 @@ export default function Experience() {
               return top !== undefined && top < window.innerHeight * 0.55
                 ? i
                 : active;
-            }, 0),
-          );
+            }, 0);
+          if (nextChapter !== currentChapter.current) {
+            currentChapter.current = nextChapter;
+            setChapter(nextChapter);
+          }
         },
       });
       if (!reduced)

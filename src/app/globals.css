@@ -786,8 +786,8 @@ footer > button {
     padding: 0 7%;
   }
   .wordmark {
-    font-size: 31px;
-    letter-spacing: 6px;
+    font-size: clamp(27px, 8vw, 31px);
+    letter-spacing: clamp(4px, 1.45vw, 6px);
   }
   .wordmark span {
     font-size: 6px;
@@ -795,7 +795,7 @@ footer > button {
   }
   .contact-link {
     margin-left: auto;
-    margin-right: 22px;
+    margin-right: clamp(8px, 5vw, 20px);
     font-size: 8px;
     padding-bottom: 8px;
   }
@@ -840,7 +840,7 @@ footer > button {
     width: 100%;
   }
   .hero h1 {
-    font-size: clamp(74px, 19vw, 112px);
+    font-size: clamp(56px, 18.5vw, 82px);
     margin: 23px 0 22px;
     letter-spacing: -2px;
   }
@@ -950,7 +950,7 @@ footer > button {
     margin-right: 3%;
   }
   .services-panel h2 {
-    font-size: 76px;
+    font-size: clamp(52px, 17vw, 76px);
   }
   .service > button {
     font-size: 26px;
@@ -972,8 +972,11 @@ footer > button {
     background: linear-gradient(90deg, #111710d9, transparent);
     min-height: 115svh;
   }
+  .beauty-section .editorial-copy {
+    max-width: min(76vw, 290px);
+  }
   .beauty-section h2 {
-    font-size: 73px;
+    font-size: clamp(54px, 17vw, 73px);
   }
   .contact-section {
     min-height: 130svh;
@@ -984,7 +987,7 @@ footer > button {
     width: 100%;
   }
   .contact-panel h2 {
-    font-size: 78px;
+    font-size: clamp(58px, 18vw, 78px);
   }
   .phone-link {
     font-size: 32px;
