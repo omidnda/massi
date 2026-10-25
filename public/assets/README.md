@@ -1,0 +1,1 @@
+All 3D asset definitions are in src/components/SalonScene.tsx. Geometry, lighting and stone/wordmark textures are created at runtime. No model or texture download is required. See docs/ASSET-LICENSES.md.
