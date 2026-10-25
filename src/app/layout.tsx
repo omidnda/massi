@@ -4,11 +4,10 @@ import "@fontsource/cormorant-garamond/latin-400-italic.css";
 import "@fontsource/manrope/latin-400.css";
 import "@fontsource/manrope/latin-500.css";
 import "./globals.css";
-import "./visual-refresh.css";
 export const metadata: Metadata = {
   title: "MASSI — The art of becoming",
   description:
-    "An independent cinematic design concept for Salon Massi, Hamburg. Original 3D interior; local demonstration only.",
+    "Unabhängiges Hair- und Beauty-Designkonzept für Salon Massi in Hamburg. Redaktionelle Beispielbilder; keine offizielle Website.",
   robots: { index: false, follow: false },
 };
 export default function RootLayout({

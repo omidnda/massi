@@ -1,44 +1,33 @@
 <!doctype html>
-<html lang="en">
-  <meta charset="utf-8" /><title>MASSI · Local responsive QA</title
+<html lang="de">
+  <meta charset="utf-8" /><meta
+    name="viewport"
+    content="width=device-width,initial-scale=1"
+  /><meta name="robots" content="noindex,nofollow" /><title>
+    MASSI · Responsive QA</title
   ><style>
     body {
-      background: #30352b;
-      color: #f2e8d2;
-      font: 14px Arial;
       margin: 20px;
-    }
-    nav {
-      display: flex;
-      gap: 20px;
-      margin-bottom: 8px;
-    }
-    a {
-      color: #f2e8d2;
+      background: #f5f0e8;
+      color: #45382e;
+      font: 13px Arial;
     }
     iframe {
-      width: 390px;
+      width: min(390px, 100%);
       height: 844px;
-      border: 1px solid #bca075;
+      border: 1px solid #a48657;
+      box-sizing: border-box;
+    }
+    a {
+      color: inherit;
     }
     p {
-      max-width: 100%;
-      line-height: 1.2;
-      font-size: 11px;
-      margin: 0 0 8px;
-    }
-  </style>
-  <nav>
-    <a href="/">Desktop</a><a href="/qa.html">390 × 844 mobile viewport</a
-    ><a href="/qa.html?motion=reduced">Reduced motion</a
-    ><a href="/qa.html?view=static">Forced no-WebGL fallback</a>
-  </nav>
+      line-height: 1.6;
+    }</style
+  ><a href="/">Website öffnen ↗</a>
   <p>
-    Local QA fixture. The embedded page has a real 390 × 844 CSS viewport. No
-    device or mobile GPU is emulated.
+    390 × 844 CSS-Viewport. Keine Simulation eines physischen Telefons.
+    Reduzierte Bewegung folgt der Systemeinstellung.
   </p>
-  <iframe title="MASSI mobile viewport" src="/"></iframe>
-  <script>
-    document.querySelector("iframe").src = "/" + location.search;
-  </script>
+  <iframe title="MASSI – mobile Vorschau" src="/"></iframe>
 </html>
